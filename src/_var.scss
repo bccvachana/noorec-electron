@@ -1,0 +1,54 @@
+$color-primary: white;
+$color-accent1: #fa5458;
+$color-accent2: #feb562;
+$color-text: #3b4251;
+$color-detail: #7f848d;
+
+@mixin font-h0 {
+  font-size: 3.8vw;
+  font-weight: 600;
+}
+@mixin font-h1 {
+  font-size: 3vw;
+  font-weight: 600;
+}
+@mixin font-h2 {
+  font-size: 2.6vw;
+  font-weight: 600;
+}
+@mixin font-h3 {
+  font-size: 2.2vw;
+  font-weight: 600;
+}
+@mixin font-h4 {
+  font-size: 1.8vw;
+  font-weight: 600;
+}
+@mixin font-detail1 {
+  font-size: 2.2vw;
+  font-weight: 400;
+}
+@mixin font-detail2 {
+  font-size: 1.8vw;
+  font-weight: 400;
+}
+@mixin font-detail3 {
+  font-size: 1.4vw;
+  font-weight: 400;
+}
+
+$radius: 2.5vw;
+
+@mixin flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin shadow1 {
+  box-shadow: 0 0 1vw 0.18vw rgba(0, 0, 0, 0.25);
+}
+
+@mixin shadow2 {
+  box-shadow: 0 0 1.2vw 0.2vw rgba(0, 0, 0, 0.05);
+}

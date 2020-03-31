@@ -1,0 +1,23 @@
+@import "../../../var";
+
+.Container {
+  height: 88vh;
+}
+
+.Title {
+  @include font-h1;
+}
+
+.Instruction div {
+  display: inline-block;
+  width: 20vw;
+  height: 25vw;
+  background-color: #ffffff;
+  @include shadow2;
+  border-radius: $radius;
+  margin: 2vw 2vw 1vw;
+}
+
+.ButtonContainer div {
+  @include shadow2;
+}

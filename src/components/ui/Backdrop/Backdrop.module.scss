@@ -1,0 +1,12 @@
+@import "../../../var";
+
+.Backdrop {
+  @include flex;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba($color: #3b4251, $alpha: 0.45);
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+}

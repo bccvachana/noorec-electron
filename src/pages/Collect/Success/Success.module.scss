@@ -1,0 +1,27 @@
+@import "../../../var";
+
+.Container {
+  height: 88vh;
+}
+
+.Loading {
+  @include flex;
+  flex-direction: column;
+}
+
+.Title {
+  @include font-h2;
+  margin-top: -1.5vw;
+}
+
+.Detail {
+  @include font-detail2;
+}
+
+.Success {
+  width: 45vw;
+  height: 30vw;
+  background-color: $color-primary;
+  @include shadow2;
+  border-radius: $radius;
+}

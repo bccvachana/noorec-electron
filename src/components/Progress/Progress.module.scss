@@ -1,0 +1,67 @@
+@import "../../var";
+
+.Container {
+  @include flex;
+  height: 12vh;
+  top: 88vh;
+  position: relative;
+  padding-bottom: 11vh;
+}
+.Container {
+  .Checkpoint,
+  .Load {
+    margin: 0.3vw;
+  }
+}
+
+.Checkpoint {
+  width: 1.3vw;
+  height: 1.3vw;
+  border-radius: 10vw;
+  border: 0.25vw solid #dbdbdb;
+  transition: all 0.25s ease-in-out;
+}
+.Checkpoint.Current {
+  border: 0.25vw solid $color-accent1;
+}
+.Checkpoint.Checked {
+  border: 0.25vw solid $color-accent1;
+  background-color: $color-accent1;
+}
+
+.LoadContainer {
+  @include flex;
+  width: 5vw;
+}
+.Load {
+  width: 0.6vw;
+  height: 0.6vw;
+  border-radius: 10vw;
+  background-color: #dbdbdb;
+  transition: all 0.25s ease-in-out;
+}
+.Loaded .Load {
+  background-color: $color-accent1;
+}
+.Loading .Load {
+  background-color: $color-accent1;
+  animation: LoadExpand 1.8s ease-in-out infinite;
+}
+
+@keyframes LoadExpand {
+  0%,
+  34%,
+  100% {
+    width: 0.7vw;
+  }
+  17% {
+    width: 1.3vw;
+  }
+}
+
+.Load:nth-child(2) {
+  animation-delay: 0.4s;
+}
+.Load:nth-child(3) {
+  animation-delay: 0.7s;
+}

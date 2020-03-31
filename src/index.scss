@@ -1,0 +1,61 @@
+@import "./var";
+@import "./assets/style/font/font.css";
+@import "./assets/style/animate.css";
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Prompt;
+  color: $color-text;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+body {
+  background-color: #f7f7f7;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  user-select: none;
+}
+
+a,
+a:hover,
+a:active,
+a:focus {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  border: 0;
+  text-decoration: none;
+}
+
+.Blur * {
+  filter: blur(4.5px);
+}
+
+.FullPageContainer {
+  @include flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+}
+
+.Button {
+  @include font-h4;
+  margin: 2vw 0.8vw 0 0.8vw;
+  border-radius: $radius;
+  display: inline-block;
+  padding: 0.3vw;
+  width: 15vw;
+  border: solid $color-accent2 0.25vw;
+  cursor: pointer;
+}
+
+.PrimaryButton {
+  background-color: $color-accent2;
+  color: $color-primary;
+}
+.SecondaryButton {
+  background-color: $color-primary;
+  color: $color-accent2;
+}

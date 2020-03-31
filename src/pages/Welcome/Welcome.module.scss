@@ -1,0 +1,63 @@
+@import "../../var";
+
+.Container {
+  justify-content: flex-start;
+}
+
+.Triangle {
+  width: 100vw;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: -100;
+}
+
+.Character {
+  width: 100vw;
+  position: fixed;
+  bottom: 1.2vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Character img {
+  width: 37vw;
+}
+
+.Logo {
+  width: 35vw;
+  margin-top: 6.5vw;
+}
+
+.Detail {
+  @include font-detail2;
+  margin-top: 2.2vw;
+}
+
+.Button {
+  background-color: $color-accent1;
+  color: $color-primary;
+  width: 25vw;
+  @include font-h2;
+  margin-top: 2.2vw;
+  border-radius: $radius;
+  @include shadow1;
+  animation: button-scale 1.5s linear infinite;
+}
+
+.Button:hover {
+  background-color: $color-accent2;
+}
+
+@keyframes button-scale {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

@@ -1,0 +1,129 @@
+@import "../../var";
+
+.QrContainer {
+  width: 30vw;
+  height: 30vw;
+  @include flex;
+  position: relative;
+}
+
+.QrFade {
+  position: absolute;
+  @include flex;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: white;
+  z-index: 3;
+  animation: fade 0.3s ease-in-out 2s forwards;
+}
+@keyframes fade {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.QrBorder {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    rgba(220, 114, 93, 1) 0%,
+    rgba(254, 181, 98, 1) 100%
+  );
+  border-radius: $radius;
+  clip-path: polygon(
+    0% 0%,
+    0% 100%,
+    8% 100%,
+    8% 8%,
+    92% 8%,
+    92% 92%,
+    8% 92%,
+    8% 100%,
+    100% 100%,
+    100% 0%
+  );
+  z-index: 4;
+}
+
+.Corner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  @include flex;
+  z-index: 5;
+}
+
+.Corner img {
+  width: 94.2%;
+}
+
+.Qr {
+  width: 85%;
+  position: relative;
+  z-index: 1;
+}
+
+.QrFadeDown {
+  position: absolute;
+  width: 100%;
+  height: 25%;
+  left: 0;
+  background: linear-gradient(
+    0deg,
+    rgba(247, 247, 247, 0.7) 0%,
+    rgba(247, 247, 247, 0) 100%
+  );
+  animation: fadeDown 5s 2.3s linear infinite;
+  z-index: 2;
+}
+
+@keyframes fadeDown {
+  0% {
+    top: -25%;
+  }
+  50% {
+    top: 100%;
+  }
+}
+
+.QrFadeUp {
+  position: absolute;
+  width: 100%;
+  height: 25%;
+  left: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(247, 247, 247, 0.7) 0%,
+    rgba(247, 247, 247, 0) 100%
+  );
+  animation: fadeUp 5s 4.8s linear infinite;
+  z-index: 2;
+}
+
+@keyframes fadeUp {
+  0% {
+    top: 100%;
+  }
+  50% {
+    top: -25%;
+  }
+}
+
+.Detail {
+  position: relative;
+  z-index: 6;
+  @include font-detail1;
+  margin-top: 2vw;
+}
+
+.Detail span {
+  font-weight: 600;
+  color: #fd5353;
+}

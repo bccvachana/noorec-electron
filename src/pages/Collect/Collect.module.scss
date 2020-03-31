@@ -1,0 +1,28 @@
+@import "../../var";
+
+.Container {
+  height: 88vh;
+}
+
+.VideoContainer {
+  width: 45vw;
+  @include flex;
+  padding: 1.2vw;
+  background-color: $color-primary;
+  border-radius: 2.5vw;
+  @include shadow2;
+  margin-bottom: 2.5vw;
+}
+
+.Video {
+  width: 100%;
+  border-radius: 1.5vw;
+}
+
+.Title {
+  @include font-h2;
+}
+
+.Detail div {
+  @include font-detail2;
+}

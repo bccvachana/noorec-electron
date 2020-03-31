@@ -1,0 +1,27 @@
+@import "../../var";
+
+.CharacterContainer {
+  background-image: url("../../assets/Loading/loadingCharacterBefore.svg");
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 0 0.4vw rgba(0, 0, 0, 0.08));
+  background-size: 100%, auto;
+  width: 25vw;
+  height: 33.5vw;
+}
+
+.Character {
+  background-image: url("../../assets/Loading/loadingCharacterAfter.svg");
+  background-repeat: no-repeat;
+  background-size: 100%, auto;
+  width: 100%;
+  animation: loading 7.5s ease-in-out 1s 1 forwards;
+}
+
+@keyframes loading {
+  0% {
+    height: 0%;
+  }
+  100% {
+    height: 100%;
+  }
+}
