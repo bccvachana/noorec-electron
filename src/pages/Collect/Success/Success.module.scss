@@ -9,7 +9,7 @@
   flex-direction: column;
 }
 
-.Title {
+.LoadingTitle {
   @include font-h2;
   margin-top: -1.5vw;
 }
@@ -19,9 +19,15 @@
 }
 
 .Success {
-  width: 45vw;
-  height: 30vw;
+  padding: 3vw 4vw;
   background-color: $color-primary;
+  @include flex;
+  flex-direction: column;
   @include shadow2;
   border-radius: $radius;
+}
+
+.SuccessTitle {
+  @include font-h2;
+  margin-top: 0.7vw;
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import DeviceErrorModal from "../components/ui/Modal/DeviceErrorModal";
-import { checkPort } from "./arduino";
+import { checkPort, startPort } from "./arduino";
 
 const checkWebcam = async () => {
   const mediaDevices = await navigator.mediaDevices.enumerateDevices();
@@ -23,7 +23,7 @@ const checkDevice = async () => {
       };
 };
 
-const DeviceErrorModalHandler = async (openModal, closeModal) => {
+const DeviceErrorModalHandler = async (openModal, closeModal, setDevice) => {
   const deviceStatus = await checkDevice();
   if (deviceStatus) {
     openModal(
@@ -31,10 +31,12 @@ const DeviceErrorModalHandler = async (openModal, closeModal) => {
         status={deviceStatus}
         clicked={() => {
           closeModal();
-          DeviceErrorModalHandler(openModal, closeModal);
+          DeviceErrorModalHandler(openModal, closeModal, setDevice);
         }}
       />
     );
+  } else {
+    setDevice(await startPort());
   }
 };
 

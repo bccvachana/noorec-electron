@@ -1,8 +1,8 @@
 import React from "react";
-import weightHeightMock from "../../assets/CollectData/weightHeightMock.mp4";
-import temperatureMock from "../../assets/CollectData/temperatureMock.mp4";
-import bloodPressureMock from "../../assets/CollectData/bloodPressureMock.mp4";
-import rateOxygenMock from "../../assets/CollectData/rateOxygenMock.mp4";
+import weightHeightMock from "../../assets/Collect/weightHeightMock.mp4";
+import temperatureMock from "../../assets/Collect/temperatureMock.mp4";
+import bloodPressureMock from "../../assets/Collect/bloodPressureMock.mp4";
+import rateOxygenMock from "../../assets/Collect/rateOxygenMock.mp4";
 
 const CollectStaticType = {
   weightHeight: {

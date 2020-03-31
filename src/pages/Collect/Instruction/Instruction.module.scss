@@ -8,7 +8,7 @@
   @include font-h1;
 }
 
-.Instruction div {
+.Instruction > div {
   display: inline-block;
   width: 20vw;
   height: 25vw;

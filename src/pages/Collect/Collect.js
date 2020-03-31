@@ -7,7 +7,6 @@ import CollectStaticType from "./CollectStaticType";
 import Instruction from "./Instruction/Instruction";
 import Success from "./Success/Success";
 import Progress from "../../components/Progress/Progress";
-import { startPort } from "../../utils/arduino";
 
 const typeArray = [
   "weightHeight",
@@ -19,23 +18,23 @@ const typeArray = [
 const Collect = props => {
   const stateType = props.type ? props.type : "weightHeight";
   const stateMode = props.mode ? props.mode : "all";
-  const [device, setDevice] = useState(null);
-  const [data, setData] = useState([]);
+  // const [device, setDevice] = useState(null);
+  // const [data, setData] = useState([]);
   const [instruction, setInstruction] = useState(true);
   const [success, setSuccess] = useState(false);
   const [index, setIndex] = useState(0);
 
-  useEffect(() => {
-    let getDevice;
-    const arduino = async () => {
-      getDevice = await startPort();
-      const timer = setTimeout(() => {
-        setDevice(getDevice);
-        clearTimeout(timer);
-      }, 500);
-    };
-    arduino();
-  }, []);
+  // useEffect(() => {
+  //   let getDevice;
+  //   const arduino = async () => {
+  //     getDevice = await startPort();
+  //     const timer = setTimeout(() => {
+  //       setDevice(getDevice);
+  //       clearTimeout(timer);
+  //     }, 500);
+  //   };
+  //   arduino();
+  // }, []);
 
   // useEffect(() => {
   //   if (device) {
@@ -47,38 +46,26 @@ const Collect = props => {
   // }, [device]);
 
   useEffect(() => {
-    console.log(data);
+    console.log(props.deviceData);
     if (stateMode === "all") {
-      if (data && data[0] === "done" && index < 5) nextType();
+      if (props.deviceData && props.deviceData[0] === "done" && index < 5)
+        nextType();
     } else {
-      if (data && data[0] === "done" && index === 1) nextType();
+      if (props.deviceData && props.deviceData[0] === "done" && index === 1)
+        nextType();
     }
-  }, [data]);
+  }, [props.deviceData]);
 
   useEffect(() => {
-    if (device && index === 1) {
-      console.log("open");
-      device.parser.on("data", result => {
-        setData(result.split(","));
-      });
-    }
     const currentTypeIndex = typeArray.findIndex(type => type === stateType);
     if (stateMode === "all") {
-      if (device && index > 0 && index < 5)
-        device.port.write((currentTypeIndex + 1).toString());
-      else if (index === 5) {
-        device.port.close(() => {
-          console.log("close");
-        });
-      }
+      if (index > 0 && index < 5)
+        props.device.port.write((currentTypeIndex + 1).toString());
+      else if (index === 5) props.device.port.write("0");
     } else {
-      if (device && index === 1)
-        device.port.write((currentTypeIndex + 1).toString());
-      else if (index === 2) {
-        device.port.close(() => {
-          console.log("close");
-        });
-      }
+      if (index === 1)
+        props.device.port.write((currentTypeIndex + 1).toString());
+      else if (index === 2) props.device.port.write("0");
     }
 
     // document.onkeydown = event => {
@@ -132,7 +119,7 @@ const Collect = props => {
         classNames="FadeLeft"
         unmountOnExit
       >
-        <Instruction nextType={nextType} device={device} />
+        <Instruction nextType={nextType} />
       </CSSTransition>
       {typeArray.map(type => (
         <CSSTransition

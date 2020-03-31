@@ -29,10 +29,6 @@ a:focus {
   text-decoration: none;
 }
 
-.Blur * {
-  filter: blur(4.5px);
-}
-
 .FullPageContainer {
   @include flex;
   flex-direction: column;

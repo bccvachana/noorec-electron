@@ -22,13 +22,11 @@ const withModal = WrappedComponent => {
       return (
         <div>
           <Modal show={this.state.isModal}>{this.state.ModalComponent}</Modal>
-          <div className={this.state.isModal ? "Blur" : null}>
-            <WrappedComponent
-              {...this.props}
-              openModal={this.openModal}
-              closeModal={this.closeModal}
-            />
-          </div>
+          <WrappedComponent
+            {...this.props}
+            openModal={this.openModal}
+            closeModal={this.closeModal}
+          />
         </div>
       );
     }

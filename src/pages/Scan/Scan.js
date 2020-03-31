@@ -73,9 +73,7 @@ class Scan extends Component {
   render() {
     return (
       <div>
-        <div
-          className={`${this.state.isLoading ? "Blur" : ""} FullPageContainer`}
-        >
+        <div className="FullPageContainer">
           <div className={classes.QrContainer}>
             <div className={classes.Qr}>
               <QrReader

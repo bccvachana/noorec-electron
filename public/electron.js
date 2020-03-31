@@ -11,12 +11,12 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1920,
     height: 1080,
-    // fullscreen: true,
+    fullscreen: isDev ? false : true,
     webPreferences: {
       nodeIntegration: true
     }
   });
-  // mainWindow.setMenu(null);
+  if (!isDev) mainWindow.setMenu(null);
   mainWindow.loadURL(
     isDev
       ? "http://localhost:3000"

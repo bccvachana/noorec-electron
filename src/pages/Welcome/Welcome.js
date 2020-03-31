@@ -11,7 +11,13 @@ import DeviceErrorModalHandler from "../../utils/checkDevice";
 
 class Welcome extends Component {
   componentDidMount() {
-    DeviceErrorModalHandler(this.props.openModal, this.props.closeModal);
+    if (!this.props.device) {
+      DeviceErrorModalHandler(
+        this.props.openModal,
+        this.props.closeModal,
+        this.props.setDevice
+      );
+    }
   }
   render() {
     return (
@@ -40,4 +46,4 @@ class Welcome extends Component {
   }
 }
 
-export default withModal(Welcome);
+export default withModal(Welcome, true);

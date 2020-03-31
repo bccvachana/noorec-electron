@@ -49,7 +49,7 @@ const Menu = props => {
           {props.userName ? props.userName : "null"}
         </span>
       </div>
-      <div className={classes.Detail}>เลือกสิ่งที่ต้องการตรวจวัด</div>
+      <div className={classes.Detail}>เลือกสิ่งที่ต้องการตรวจวัดได้เลยค่ะ</div>
       <div className={classes.MenuContainer}>
         {button.map(({ name, img, alt, type }) => (
           <div

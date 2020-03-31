@@ -14,10 +14,7 @@ const Instruction = props => (
       <div
         className="Button SecondaryButton"
         onClick={() => {
-          props.device.port.close(() => {
-            console.log("close");
-          });
-          props.history.push({ pathname: "menu" });
+          props.history.push({ pathname: "/menu" });
         }}
       >
         ย้อนกลับ
