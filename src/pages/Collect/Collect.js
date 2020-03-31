@@ -125,8 +125,7 @@ const Collect = props => {
         classNames="FadeLeft"
         unmountOnExit
       >
-        <Success />
-        {/* <Instruction nextType={nextType} /> */}
+        <Instruction nextType={nextType} />
       </CSSTransition>
       {typeArray.map(type => (
         <CSSTransition

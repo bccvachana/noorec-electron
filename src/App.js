@@ -90,7 +90,7 @@ class App extends Component {
     ];
     return (
       <div>
-        <Redirect from="/" to="/menu" />
+        <Redirect from="/" to="/loading" />
         <div className="FadeContainer">
           {routes.map(({ path, Component }) => (
             <Route key={path} exact path={path}>
