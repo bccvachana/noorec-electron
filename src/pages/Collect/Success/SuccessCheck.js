@@ -20,7 +20,7 @@ class SucessCheck extends Component {
       fill: "#fa5458",
       radius: { 0: 80 },
       duration: 1000,
-      scale: 1.5,
+      scale: window.screen.width * (0.8 / 1080),
       easing: "circ.inout"
     });
     const check = new mojs.Shape({
@@ -33,7 +33,7 @@ class SucessCheck extends Component {
       strokeDasharray: "100%",
       strokeDashoffset: { "100%": "0%" },
       duration: 900,
-      scale: 2
+      scale: window.screen.width * (1.1 / 1080)
     });
     const lines = new mojs.Burst({
       delay: 200,
@@ -41,7 +41,7 @@ class SucessCheck extends Component {
       radius: { 65: 75 },
       angle: 0,
       count: 8,
-      scale: 2,
+      scale: window.screen.width * (1.1 / 1080),
       children: {
         shape: "line",
         radius: 20,
@@ -64,8 +64,8 @@ class SucessCheck extends Component {
         id="check"
         style={{
           position: "relative",
-          width: "13vw",
-          height: "13vw"
+          width: "12vw",
+          height: "12vw"
         }}
       />
     );

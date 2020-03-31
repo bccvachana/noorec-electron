@@ -80,6 +80,7 @@ class App extends Component {
           <Collect
             device={this.state.device}
             deviceData={this.state.deviceData}
+            setDeviceData={this.setDeviceData}
             type={this.state.collectType}
             mode={this.state.collectMode}
             setCollectType={this.setCollectType}
@@ -89,7 +90,7 @@ class App extends Component {
     ];
     return (
       <div>
-        <Redirect from="/" to="/loading" />
+        <Redirect from="/" to="/menu" />
         <div className="FadeContainer">
           {routes.map(({ path, Component }) => (
             <Route key={path} exact path={path}>

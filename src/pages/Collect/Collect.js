@@ -61,11 +61,17 @@ const Collect = props => {
     if (stateMode === "all") {
       if (index > 0 && index < 5)
         props.device.port.write((currentTypeIndex + 1).toString());
-      else if (index === 5) props.device.port.write("0");
+      else if (index === 5) {
+        props.setDeviceData(null);
+        props.device.port.write("0");
+      }
     } else {
       if (index === 1)
         props.device.port.write((currentTypeIndex + 1).toString());
-      else if (index === 2) props.device.port.write("0");
+      else if (index === 2) {
+        props.setDeviceData(null);
+        props.device.port.write("0");
+      }
     }
 
     // document.onkeydown = event => {
@@ -119,7 +125,8 @@ const Collect = props => {
         classNames="FadeLeft"
         unmountOnExit
       >
-        <Instruction nextType={nextType} />
+        <Success />
+        {/* <Instruction nextType={nextType} /> */}
       </CSSTransition>
       {typeArray.map(type => (
         <CSSTransition
@@ -152,7 +159,7 @@ const Collect = props => {
         classNames="FadeLeft"
         unmountOnExit
       >
-        <Success nextType={nextType} />
+        <Success />
       </CSSTransition>
       <Progress mode={stateMode} index={index} />
     </div>
