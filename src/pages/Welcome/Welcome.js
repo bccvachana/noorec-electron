@@ -46,4 +46,4 @@ class Welcome extends Component {
   }
 }
 
-export default withModal(Welcome, true);
+export default withModal(Welcome);

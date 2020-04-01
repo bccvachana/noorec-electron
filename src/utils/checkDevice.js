@@ -26,15 +26,18 @@ const checkDevice = async () => {
 const DeviceErrorModalHandler = async (openModal, closeModal, setDevice) => {
   const deviceStatus = await checkDevice();
   if (deviceStatus) {
-    openModal(
-      <DeviceErrorModal
-        status={deviceStatus}
-        clicked={() => {
-          closeModal();
-          DeviceErrorModalHandler(openModal, closeModal, setDevice);
-        }}
-      />
-    );
+    let time = setTimeout(() => {
+      openModal(
+        <DeviceErrorModal
+          status={deviceStatus}
+          clicked={() => {
+            closeModal();
+            DeviceErrorModalHandler(openModal, closeModal, setDevice);
+          }}
+        />
+      );
+      clearTimeout(time);
+    }, 500);
   } else {
     setDevice(await startPort());
   }

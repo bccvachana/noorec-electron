@@ -7,27 +7,26 @@ import Welcome from "./pages/Welcome/Welcome";
 import Scan from "./pages/Scan/Scan";
 import Menu from "./pages/Menu/Menu";
 import Collect from "./pages/Collect/Collect";
+import Result from "./pages/Result/Result";
+
+const stateSchema = {
+  qrData: {
+    userId: null,
+    userName: null
+  },
+  recordData: {},
+  collectMode: null,
+  collectType: null,
+  deviceData: null
+};
 
 class App extends Component {
   state = {
-    userData: {
-      userId: null,
-      userName: null
-    },
-    collectMode: null,
-    collectType: null,
-    device: null,
-    deviceData: null
+    ...stateSchema,
+    device: null
   };
   resetState = () => {
-    this.setState({
-      userData: {
-        userId: null,
-        userName: null
-      },
-      collectMode: null,
-      collectType: null
-    });
+    this.setState(stateSchema);
   };
   setDevice = device => {
     this.setState({ device: device });
@@ -41,18 +40,31 @@ class App extends Component {
   setDeviceData = data => {
     this.setState({ deviceData: data });
   };
-  getQrData = (userid, username) => {
+  setQrData = (userid, username) => {
     const qrData = {
       userId: userid,
       userName: username
     };
-    this.setState({ userData: qrData });
+    this.setState({ qrData: qrData });
+  };
+  setRecordData = (type, data) => {
+    let recordData = { ...this.state.recordData };
+    recordData[type] = data;
+    this.setState({ recordData: recordData }, () => {
+      console.log(this.state.recordData);
+    });
+  };
+  setRecordDataNull = () => {
+    this.setState({ recordData: null });
   };
   setCollectMode = mode => {
     this.setState({ collectMode: mode });
   };
   setCollectType = type => {
     this.setState({ collectType: type });
+    console.log(
+      `mode::: ${this.state.collectMode}, type::: ${this.state.collectType}`
+    );
   };
   render() {
     const routes = [
@@ -63,14 +75,15 @@ class App extends Component {
           <Welcome setDevice={this.setDevice} device={this.state.device} />
         )
       },
-      { path: "/scan", Component: <Scan getQrData={this.getQrData} /> },
+      { path: "/scan", Component: <Scan setQrData={this.setQrData} /> },
       {
         path: "/menu",
         Component: (
           <Menu
-            userName={this.state.userData.userName}
+            userName={this.state.qrData.userName}
             setCollectMode={this.setCollectMode}
             setCollectType={this.setCollectType}
+            setRecordDataNull={this.setRecordDataNull}
           />
         )
       },
@@ -84,6 +97,16 @@ class App extends Component {
             type={this.state.collectType}
             mode={this.state.collectMode}
             setCollectType={this.setCollectType}
+            setRecordData={this.setRecordData}
+          />
+        )
+      },
+      {
+        path: "/result",
+        Component: (
+          <Result
+            userName={this.state.qrData.userName}
+            recordData={this.state.recordData}
           />
         )
       }

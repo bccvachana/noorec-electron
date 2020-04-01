@@ -44,7 +44,7 @@ class Scan extends Component {
             <QrSuccessModal
               username={qrData.username}
               confirm={() => {
-                this.props.getQrData(qrData.userid, qrData.username);
+                this.props.setQrData(qrData.userid, qrData.username);
                 this.props.history.push({ pathname: "/menu" });
               }}
               retry={this.retryScan}

@@ -15,49 +15,46 @@ const typeArray = [
   "rateOxygen"
 ];
 
+const setRecord = async (deviceData, setRecordData) => {
+  switch (deviceData[1]) {
+    case "weightHeight":
+      await setRecordData("weight", deviceData[2]);
+      await setRecordData("height", deviceData[3]);
+      break;
+    case "temperature":
+      await setRecordData("temperature", deviceData[2]);
+      break;
+    case "bloodPressure":
+      await setRecordData("bloodPressureHigh", deviceData[2]);
+      await setRecordData("bloodPressureLow", deviceData[3]);
+      break;
+    case "rateOxygen":
+      await setRecordData("rate", deviceData[2]);
+      await setRecordData("oxygen", deviceData[3]);
+      break;
+    default:
+      break;
+  }
+};
+
 const Collect = props => {
   const stateType = props.type ? props.type : "weightHeight";
   const stateMode = props.mode ? props.mode : "all";
-  // const [device, setDevice] = useState(null);
-  // const [data, setData] = useState([]);
+  const currentTypeIndex = typeArray.findIndex(type => type === stateType);
   const [instruction, setInstruction] = useState(true);
   const [success, setSuccess] = useState(false);
   const [index, setIndex] = useState(0);
 
-  // useEffect(() => {
-  //   let getDevice;
-  //   const arduino = async () => {
-  //     getDevice = await startPort();
-  //     const timer = setTimeout(() => {
-  //       setDevice(getDevice);
-  //       clearTimeout(timer);
-  //     }, 500);
-  //   };
-  //   arduino();
-  // }, []);
-
-  // useEffect(() => {
-  //   if (device) {
-  //     console.log("open");
-  //     device.parser.on("data", result => {
-  //       setData(result.split(","));
-  //     });
-  //   }
-  // }, [device]);
-
   useEffect(() => {
     console.log(props.deviceData);
-    if (stateMode === "all") {
-      if (props.deviceData && props.deviceData[0] === "done" && index < 5)
-        nextType();
-    } else {
-      if (props.deviceData && props.deviceData[0] === "done" && index === 1)
-        nextType();
+    const condition = stateMode === "all" ? index < 5 : index === 1;
+    if (props.deviceData && props.deviceData[0] === "done" && condition) {
+      setRecord(props.deviceData, props.setRecordData);
+      nextType();
     }
   }, [props.deviceData]);
 
   useEffect(() => {
-    const currentTypeIndex = typeArray.findIndex(type => type === stateType);
     if (stateMode === "all") {
       if (index > 0 && index < 5)
         props.device.port.write((currentTypeIndex + 1).toString());
@@ -73,48 +70,17 @@ const Collect = props => {
         props.device.port.write("0");
       }
     }
-
-    // document.onkeydown = event => {
-    //   switch (event.keyCode) {
-    //     case 37:
-    //       backType();
-    //       break;
-    //     default:
-    //       break;
-    //   }
-    // };
   }, [index]);
 
   const nextType = () => {
-    const currentTypeIndex = typeArray.findIndex(type => type === stateType);
     if (instruction) {
       setInstruction(false);
     } else {
-      if (success) {
-        props.history.push({ pathname: "menu" });
-      }
       if (currentTypeIndex === 3 || stateMode === "one") setSuccess(true);
       else props.setCollectType(typeArray[currentTypeIndex + 1]);
     }
     setIndex(index + 1);
   };
-
-  // const backType = () => {
-  //   const currentTypeIndex = typeArray.findIndex(type => type === stateType);
-  //   if (instruction) {
-  //     props.history.push({ pathname: "menu" });
-  //   } else {
-  //     if (success) {
-  //       props.setCollectType(typeArray[currentTypeIndex]);
-  //     } else {
-  //       if (currentTypeIndex === 0 || stateMode === "one")
-  //         props.history.push({ pathname: "menu" });
-  //       else props.setCollectType(typeArray[currentTypeIndex - 1]);
-  //     }
-  //     setSuccess(false);
-  //   }
-  //   setIndex(index - 1);
-  // };
 
   return (
     <div>

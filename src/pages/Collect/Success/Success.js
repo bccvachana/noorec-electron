@@ -9,11 +9,16 @@ const Success = props => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    let timer, secondtimer;
+    timer = setTimeout(() => {
       setIsLoading(false);
+      secondtimer = setTimeout(() => {
+        props.history.push({ pathname: "/result" });
+      }, 3500);
     }, 4000);
     return () => {
       clearTimeout(timer);
+      clearTimeout(secondtimer);
     };
   }, []);
 
@@ -51,24 +56,6 @@ const Success = props => {
             <div className={classes.SuccessTitle}>เสร็จสมบูรณ์</div>
             <div className={classes.Detail}>
               บันทึกข้อมูลสุขภาพเรียบร้อยแล้วค่ะ
-            </div>
-            <div>
-              <div
-                onClick={() => {
-                  props.history.push({ pathname: "/menu" });
-                }}
-                className="Button SecondaryButton"
-              >
-                เมนูหลัก
-              </div>
-              <div
-                onClick={() => {
-                  props.history.push({ pathname: "/welcome" });
-                }}
-                className="Button PrimaryButton"
-              >
-                ข้อมูลสุขภาพ
-              </div>
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import classes from "./Menu.module.scss";
 
@@ -9,6 +9,15 @@ import rateOxygenSvg from "../../assets/Menu/rateOxygen.svg";
 import allSvg from "../../assets/Menu/all.svg";
 
 const Menu = props => {
+  useEffect(() => {
+    const setCollect = async () => {
+      await props.setCollectMode(null);
+      await props.setCollectType(null);
+      await props.setRecordDataNull();
+    };
+    setCollect();
+  }, []);
+
   const button = [
     {
       name: "น้ำหนัก / ส่วนสูง",
@@ -41,6 +50,7 @@ const Menu = props => {
       type: "weightHeight"
     }
   ];
+
   return (
     <div className="FullPageContainer">
       <div className={classes.Title}>
