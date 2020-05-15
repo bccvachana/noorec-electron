@@ -8,79 +8,116 @@ import Instruction from "./Instruction/Instruction";
 import Success from "./Success/Success";
 import Progress from "../../components/Progress/Progress";
 
+import { criteriaCheck } from "../../utils/criteria";
+
 const typeArray = [
   "weightHeight",
   "temperature",
   "bloodPressure",
-  "rateOxygen"
+  "rateOxygen",
 ];
 
 const setRecord = async (deviceData, setRecordData) => {
   switch (deviceData[1]) {
     case "weightHeight":
-      await setRecordData("weight", deviceData[2]);
-      await setRecordData("height", deviceData[3]);
+      const weight = deviceData[2];
+      const height = deviceData[3];
+      const bmi = (weight / ((height * height) / 10000)).toFixed(2);
+      setRecordData({
+        weight: weight,
+        height: height,
+        bmi: bmi,
+        bmiCriteria: criteriaCheck.bmi(bmi),
+      });
       break;
     case "temperature":
-      await setRecordData("temperature", deviceData[2]);
+      setRecordData({
+        temperature: deviceData[2],
+        temperatureCriteria: criteriaCheck.temperature(deviceData[2]),
+      });
       break;
     case "bloodPressure":
-      await setRecordData("bloodPressureHigh", deviceData[2]);
-      await setRecordData("bloodPressureLow", deviceData[3]);
+      setRecordData({
+        bloodPressureHigh: deviceData[2],
+        bloodPressureLow: deviceData[3],
+        bloodPressureCriteria: criteriaCheck.bloodPressure(
+          deviceData[2],
+          deviceData[3]
+        ),
+      });
       break;
     case "rateOxygen":
-      await setRecordData("rate", deviceData[2]);
-      await setRecordData("oxygen", deviceData[3]);
+      setRecordData({
+        rate: deviceData[2],
+        rateCriteria: criteriaCheck.rate(deviceData[2]),
+        oxygen: deviceData[3],
+        oxygenCriteria: criteriaCheck.oxygen(deviceData[3]),
+      });
       break;
     default:
       break;
   }
 };
 
-const Collect = props => {
-  const stateType = props.type ? props.type : "weightHeight";
-  const stateMode = props.mode ? props.mode : "all";
-  const currentTypeIndex = typeArray.findIndex(type => type === stateType);
+const Collect = (props) => {
+  const {
+    device,
+    deviceData,
+    setDeviceData,
+    collectMode,
+    collectType,
+    setCollectType,
+    recordData,
+    setRecordData,
+    userId,
+  } = props;
+
   const [instruction, setInstruction] = useState(true);
   const [success, setSuccess] = useState(false);
   const [index, setIndex] = useState(0);
 
-  useEffect(() => {
-    console.log(props.deviceData);
-    const condition = stateMode === "all" ? index < 5 : index === 1;
-    if (props.deviceData && props.deviceData[0] === "done" && condition) {
-      setRecord(props.deviceData, props.setRecordData);
-      nextType();
-    }
-  }, [props.deviceData]);
+  const currentTypeIndex = typeArray.findIndex((type) => type === collectType);
 
   useEffect(() => {
-    if (stateMode === "all") {
-      if (index > 0 && index < 5)
-        props.device.port.write((currentTypeIndex + 1).toString());
-      else if (index === 5) {
-        props.setDeviceData(null);
-        props.device.port.write("0");
-      }
-    } else {
-      if (index === 1)
-        props.device.port.write((currentTypeIndex + 1).toString());
-      else if (index === 2) {
-        props.setDeviceData(null);
-        props.device.port.write("0");
-      }
+    console.log(deviceData);
+    const condition = collectMode === "all" ? index < 5 : index === 1;
+    if (
+      deviceData &&
+      deviceData[0] === "done" &&
+      deviceData[1] === collectType &&
+      condition
+    ) {
+      setRecord(deviceData, setRecordData);
+      nextType();
     }
-  }, [index]);
+  }, [deviceData]);
 
   const nextType = () => {
     if (instruction) {
       setInstruction(false);
     } else {
-      if (currentTypeIndex === 3 || stateMode === "one") setSuccess(true);
-      else props.setCollectType(typeArray[currentTypeIndex + 1]);
+      if (currentTypeIndex === 3 || collectMode === "one") setSuccess(true);
+      else setCollectType(typeArray[currentTypeIndex + 1]);
     }
     setIndex(index + 1);
   };
+
+  useEffect(() => {
+    if (collectMode === "all") {
+      if (index > 0 && index < 5)
+        device.port.write((currentTypeIndex + 1).toString());
+      else if (index === 5) {
+        setDeviceData(null);
+        device.port.write("0");
+      }
+    } else {
+      if (index === 1) device.port.write((currentTypeIndex + 1).toString());
+      else if (index === 2) {
+        setDeviceData(null);
+        device.port.write("0");
+      }
+    }
+  }, [index]);
 
   return (
     <div>
@@ -93,10 +130,12 @@ const Collect = props => {
       >
         <Instruction nextType={nextType} />
       </CSSTransition>
-      {typeArray.map(type => (
+      {typeArray.map((type) => (
         <CSSTransition
           key={type}
-          in={instruction === false && type === stateType && success === false}
+          in={
+            instruction === false && type === collectType && success === false
+          }
           timeout={600}
           classNames="FadeLeft"
           unmountOnExit
@@ -124,9 +163,13 @@ const Collect = props => {
         classNames="FadeLeft"
         unmountOnExit
       >
-        <Success />
+        <Success userId={userId} />
       </CSSTransition>
-      <Progress mode={stateMode} index={index} />
+      <Progress
+        recordData={recordData}
+        collectMode={collectMode}
+        index={index}
+      />
     </div>
   );
 };

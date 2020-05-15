@@ -2,14 +2,10 @@
 
 .Container {
   justify-content: flex-start;
-}
-
-.Triangle {
-  width: 100vw;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  z-index: -100;
+  background-image: url(../../assets/Welcome/triangle.svg);
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: 100% 23vh;
 }
 
 .Character {
@@ -22,17 +18,17 @@
 }
 
 .Character img {
-  width: 37vw;
+  width: 35vw;
 }
 
 .Logo {
-  width: 35vw;
-  margin-top: 6.5vw;
+  width: 30vw;
+  margin-top: 7vw;
 }
 
 .Detail {
   @include font-detail2;
-  margin-top: 2.2vw;
+  margin: 2.5vw 0;
 }
 
 .Button {
@@ -40,7 +36,6 @@
   color: $color-primary;
   width: 25vw;
   @include font-h2;
-  margin-top: 2.2vw;
   border-radius: $radius;
   @include shadow1;
   animation: button-scale 1.5s linear infinite;

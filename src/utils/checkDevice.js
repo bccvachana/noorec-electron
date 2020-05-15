@@ -4,7 +4,7 @@ import { checkPort, startPort } from "./arduino";
 
 const checkWebcam = async () => {
   const mediaDevices = await navigator.mediaDevices.enumerateDevices();
-  const webcamList = mediaDevices.filter(device => {
+  const webcamList = mediaDevices.filter((device) => {
     return device.kind === "videoinput";
   });
   return webcamList.length !== 0 ? true : false;
@@ -19,7 +19,7 @@ const checkDevice = async () => {
     : {
         isNetwork: isNetwork,
         isWebcam: isWebcam,
-        isArduino: isArduino
+        isArduino: isArduino,
       };
 };
 

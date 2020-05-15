@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import classes from "./Instruction.module.scss";
 
-const Instruction = props => (
+const Instruction = (props) => (
   <div className={`Fade FullPageContainer ${classes.Container}`}>
     <div className={classes.Title}>คำแนะนำการใช้งาน</div>
     <div className={classes.Instruction}>

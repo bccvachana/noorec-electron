@@ -6,9 +6,9 @@ export const checkPort = async () => {
   let isArduino = false;
   const portList = await SerialPort.list();
   if (portList.length !== 0) {
-    portList.forEach(port => {
+    portList.forEach((port) => {
       isArduino =
-        port.manufacturer && port.manufacturer.includes("arduino")
+        port.serialNumber && port.serialNumber === "6&32a5dfec&0&1"
           ? true
           : false;
     });
@@ -20,9 +20,9 @@ export const startPort = async () => {
   const Readline = SerialPort.parsers.Readline;
   const portList = await SerialPort.list();
   if (portList.length !== 0) {
-    portList.forEach(port => {
+    portList.forEach((port) => {
       portName =
-        port.manufacturer && port.manufacturer.includes("arduino")
+        port.serialNumber && port.serialNumber === "6&32a5dfec&0&1"
           ? port.path
           : null;
     });

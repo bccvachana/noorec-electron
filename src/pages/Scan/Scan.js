@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import classes from "./Scan.module.scss";
 import QrReader from "react-qr-reader";
@@ -10,100 +10,105 @@ import LoadingScreen from "../../components/ui/LoadingScreen/LoadingScreen";
 import QrErrorModal from "../../components/ui/Modal/QrErrorModal";
 import QrSuccessModal from "../../components/ui/Modal/QrSuccessModal";
 
-let backTimer, loadTimer;
+let backToWelcomeTimer, loadTimer;
 
-class Scan extends Component {
-  state = {
-    isLoading: false
+const Scan = (props) => {
+  const {
+    history: { push },
+    setUserName,
+    setUserId,
+    openModal,
+    closeModal,
+  } = props;
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const setBackToWelcomeTimer = () => {
+    // backToWelcomeTimer = setTimeout(() => {
+    //   push({ pathname: "/welcome" });
+    // }, 10000);
   };
-  setBackTimeOut = () => {
-    backTimer = setTimeout(() => {
-      this.props.history.push({ pathname: "/welcome" });
-    }, 10000);
-  };
-  retryScan = () => {
-    clearTimeout(loadTimer);
-    this.setBackTimeOut();
-    this.props.closeModal();
-  };
-  qrOnScan = result => {
+
+  const qrOnScan = (result) => {
     if (result) {
-      clearTimeout(backTimer);
-      this.setState({ isLoading: true });
+      clearTimeout(backToWelcomeTimer);
+      setIsLoading(true);
       let qrData;
       try {
         qrData = JSON.parse(result);
       } catch (e) {
         qrData = undefined;
       }
-      if (qrData && qrData.username && qrData.userid) {
-        loadTimer = setTimeout(() => {
-          clearTimeout(loadTimer);
-          this.setState({ isLoading: false });
-          this.props.openModal(
+      const username = qrData ? qrData.username : null;
+      const userid = qrData ? qrData.userid : null;
+      loadTimer = setTimeout(() => {
+        clearTimeout(loadTimer);
+        setIsLoading(false);
+        if (username && userid) {
+          openModal(
             <QrSuccessModal
-              username={qrData.username}
+              username={username}
               confirm={() => {
-                this.props.setQrData(qrData.userid, qrData.username);
-                this.props.history.push({ pathname: "/menu" });
+                setUserName(username);
+                setUserId(userid);
+                push({ pathname: "/menu" });
               }}
-              retry={this.retryScan}
+              retry={() => {
+                setBackToWelcomeTimer();
+                closeModal();
+              }}
             />
           );
-        }, 2500);
-      } else {
-        loadTimer = setTimeout(() => {
-          clearTimeout(loadTimer);
-          this.setState({ isLoading: false });
-          this.props.openModal(<QrErrorModal />);
+        } else {
+          openModal(<QrErrorModal />);
           loadTimer = setTimeout(() => {
-            this.retryScan();
+            setBackToWelcomeTimer();
+            closeModal();
           }, 3000);
-        }, 2500);
-      }
+        }
+      }, 2500);
     }
   };
-  componentDidMount() {
-    this.setBackTimeOut();
-  }
-  componentWillUnmount() {
-    clearTimeout(backTimer);
-    clearTimeout(loadTimer);
-  }
-  render() {
-    return (
-      <div>
-        <div className="FullPageContainer">
-          <div className={classes.QrContainer}>
-            <div className={classes.Qr}>
-              <QrReader
-                delay={1000}
-                showViewFinder={false}
-                onScan={this.qrOnScan}
-                onError={err => {
-                  console.log(err);
-                }}
-                style={{ width: "100%" }}
-              />
-              <div className={classes.QrFade}>
-                <LoadingDot width="7vw"></LoadingDot>
-              </div>
-              <div className={classes.QrFadeUp}></div>
-              <div className={classes.QrFadeDown}></div>
+
+  useEffect(() => {
+    setBackToWelcomeTimer();
+    return () => {
+      clearTimeout(backToWelcomeTimer);
+    };
+  }, []);
+
+  return (
+    <React.Fragment>
+      <div className="FullPageContainer">
+        <div className={classes.QrContainer}>
+          <div className={classes.Qr}>
+            <QrReader
+              delay={1000}
+              showViewFinder={false}
+              onScan={qrOnScan}
+              onError={(err) => {
+                console.log(err);
+              }}
+              style={{ width: "100%" }}
+            />
+            <div className={classes.QrFade}>
+              <LoadingDot width="7vw"></LoadingDot>
             </div>
-            <div className={classes.QrBorder}></div>
-            <div className={classes.Corner}>
-              <img src={corner} alt="corner"></img>
-            </div>
+            <div className={classes.QrFadeUp}></div>
+            <div className={classes.QrFadeDown}></div>
           </div>
-          <div className={classes.Detail}>
-            นำ <span>QR CODE {this.props.qrData}</span> มาสแกนบริเวณกล้อง
+          <div className={classes.QrBorder}></div>
+          <div className={classes.Corner}>
+            <img src={corner} alt="corner"></img>
           </div>
         </div>
-        <LoadingScreen show={this.state.isLoading} />
+        <div className={classes.Detail}>
+          นำ <span>QR CODE</span> มาสแกนบริเวณกล้อง
+        </div>
       </div>
-    );
-  }
-}
+      <LoadingScreen show={isLoading} />
+    </React.Fragment>
+  );
+};
 
 export default withModal(withRouter(Scan));

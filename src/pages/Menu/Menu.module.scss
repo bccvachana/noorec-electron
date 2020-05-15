@@ -1,5 +1,16 @@
 @import "../../var";
 
+.Nav {
+  width: 78vw;
+  height: 1.8vw;
+  text-align: right;
+
+  img {
+    height: 100%;
+    cursor: pointer;
+  }
+}
+
 .Title {
   @include font-h0;
 }
@@ -27,11 +38,11 @@
   height: 15vw;
   animation-duration: 350ms;
   animation-timing-function: ease-out;
-}
 
-.MenuButton img {
-  margin-bottom: 1vw;
-  height: 50%;
+  img {
+    margin-bottom: 1.2vw;
+    height: 50%;
+  }
 }
 
 .MenuButton:hover {

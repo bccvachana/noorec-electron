@@ -43,15 +43,16 @@ a:focus {
   display: inline-block;
   padding: 0.3vw;
   width: 15vw;
-  border: solid $color-accent2 0.25vw;
+  border: solid $color-accent1 0.25vw;
+  transform: scale(1);
   cursor: pointer;
 }
 
 .PrimaryButton {
-  background-color: $color-accent2;
+  background-color: $color-accent1;
   color: $color-primary;
 }
 .SecondaryButton {
   background-color: $color-primary;
-  color: $color-accent2;
+  color: $color-accent1;
 }

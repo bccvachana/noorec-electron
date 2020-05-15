@@ -11,10 +11,10 @@
 .Modal {
   .Icon {
     height: 8.5vw;
+    margin-bottom: 1.5vw;
   }
   .Title {
     @include font-h2;
-    margin-top: 0.7vw;
   }
   .Detail {
     @include font-detail2;

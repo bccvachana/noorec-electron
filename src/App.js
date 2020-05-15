@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect, Route, withRouter } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 
@@ -9,130 +9,107 @@ import Menu from "./pages/Menu/Menu";
 import Collect from "./pages/Collect/Collect";
 import Result from "./pages/Result/Result";
 
-const stateSchema = {
-  qrData: {
-    userId: null,
-    userName: null
-  },
-  recordData: {},
-  collectMode: null,
-  collectType: null,
-  deviceData: null
-};
+const App = (props) => {
+  const [device, setDevice] = useState(null);
+  const [deviceData, setDeviceData] = useState(null);
+  const [userName, setUserName] = useState("");
+  const [userId, setUserId] = useState("");
+  const [collectMode, setCollectMode] = useState("");
+  const [collectType, setCollectType] = useState("");
+  const [recordData, setRecordData] = useState({});
 
-class App extends Component {
-  state = {
-    ...stateSchema,
-    device: null
-  };
-  resetState = () => {
-    this.setState(stateSchema);
-  };
-  setDevice = device => {
-    this.setState({ device: device });
-    console.log(this.state.device);
-    if (this.state.device) {
-      this.state.device.parser.on("data", result => {
-        this.setDeviceData(result.split(","));
+  useEffect(() => {
+    if (device) {
+      console.log(device);
+      device.parser.on("data", (result) => {
+        setDeviceData(result.split(","));
       });
     }
-  };
-  setDeviceData = data => {
-    this.setState({ deviceData: data });
-  };
-  setQrData = (userid, username) => {
-    const qrData = {
-      userId: userid,
-      userName: username
-    };
-    this.setState({ qrData: qrData });
-  };
-  setRecordData = (type, data) => {
-    let recordData = { ...this.state.recordData };
-    recordData[type] = data;
-    this.setState({ recordData: recordData }, () => {
-      console.log(this.state.recordData);
-    });
-  };
-  setRecordDataNull = () => {
-    this.setState({ recordData: null });
-  };
-  setCollectMode = mode => {
-    this.setState({ collectMode: mode });
-  };
-  setCollectType = type => {
-    this.setState({ collectType: type });
-    console.log(
-      `mode::: ${this.state.collectMode}, type::: ${this.state.collectType}`
-    );
-  };
-  render() {
-    const routes = [
-      { path: "/loading", Component: <Loading /> },
-      {
-        path: "/welcome",
-        Component: (
-          <Welcome setDevice={this.setDevice} device={this.state.device} />
-        )
-      },
-      { path: "/scan", Component: <Scan setQrData={this.setQrData} /> },
-      {
-        path: "/menu",
-        Component: (
-          <Menu
-            userName={this.state.qrData.userName}
-            setCollectMode={this.setCollectMode}
-            setCollectType={this.setCollectType}
-            setRecordDataNull={this.setRecordDataNull}
-          />
-        )
-      },
-      {
-        path: "/collect",
-        Component: (
-          <Collect
-            device={this.state.device}
-            deviceData={this.state.deviceData}
-            setDeviceData={this.setDeviceData}
-            type={this.state.collectType}
-            mode={this.state.collectMode}
-            setCollectType={this.setCollectType}
-            setRecordData={this.setRecordData}
-          />
-        )
-      },
-      {
-        path: "/result",
-        Component: (
-          <Result
-            userName={this.state.qrData.userName}
-            recordData={this.state.recordData}
-          />
-        )
-      }
-    ];
-    return (
-      <div>
-        <Redirect from="/" to="/loading" />
-        <div className="FadeContainer">
-          {routes.map(({ path, Component }) => (
-            <Route key={path} exact path={path}>
-              {props => (
-                <CSSTransition
-                  in={props.match != null}
-                  timeout={500}
-                  classNames="Fade"
-                  unmountOnExit
-                >
-                  <div className="Fade">{Component}</div>
-                </CSSTransition>
-              )}
-            </Route>
-          ))}
-        </div>
+  }, [device]);
+
+  useEffect(() => {
+    console.log(`mode::: ${collectMode}, type::: ${collectType}`);
+  }, [collectType]);
+
+  useEffect(() => {
+    console.log(recordData);
+  }, [recordData]);
+
+  const routes = [
+    { path: "/loading", Component: <Loading /> },
+    {
+      path: "/welcome",
+      Component: <Welcome setDevice={setDevice} device={device} />,
+    },
+    {
+      path: "/scan",
+      Component: <Scan setUserName={setUserName} setUserId={setUserId} />,
+    },
+    {
+      path: "/menu",
+      Component: (
+        <Menu
+          userName={userName}
+          setCollectMode={setCollectMode}
+          setCollectType={setCollectType}
+          setRecordData={setRecordData}
+        />
+      ),
+    },
+    {
+      path: "/collect",
+      Component: (
+        <Collect
+          device={device}
+          deviceData={deviceData}
+          setDeviceData={setDeviceData}
+          collectType={collectType}
+          collectMode={collectMode}
+          setCollectType={setCollectType}
+          recordData={recordData}
+          setRecordData={(data) => {
+            setRecordData((prev) => {
+              return { ...prev, ...data };
+            });
+          }}
+          userId={userId}
+        />
+      ),
+    },
+    {
+      path: "/result",
+      Component: (
+        <Result
+          userName={userName}
+          recordData={recordData}
+          collectMode={collectMode}
+          collectType={collectType}
+        />
+      ),
+    },
+  ];
+
+  return (
+    <React.Fragment>
+      <Redirect from="/" to="/menu" />
+      <div className="FadeContainer">
+        {routes.map(({ path, Component }) => (
+          <Route key={path} exact path={path}>
+            {(props) => (
+              <CSSTransition
+                in={props.match != null}
+                timeout={500}
+                classNames="Fade"
+                unmountOnExit
+              >
+                <div className="Fade">{Component}</div>
+              </CSSTransition>
+            )}
+          </Route>
+        ))}
       </div>
-    );
-  }
-}
+    </React.Fragment>
+  );
+};
 
 export default withRouter(App);

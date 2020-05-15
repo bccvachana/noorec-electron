@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import classes from "./Loading.module.scss";
 import { withRouter } from "react-router-dom";
 
-const Loading = props => {
+const Loading = (props) => {
   useEffect(() => {
     let timer = setTimeout(() => {
       props.history.push({ pathname: "/welcome" });
