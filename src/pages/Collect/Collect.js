@@ -163,13 +163,9 @@ const Collect = (props) => {
         classNames="FadeLeft"
         unmountOnExit
       >
-        <Success userId={userId} />
+        <Success userId={userId} recordData={recordData} />
       </CSSTransition>
-      <Progress
-        recordData={recordData}
-        collectMode={collectMode}
-        index={index}
-      />
+      <Progress collectMode={collectMode} index={index} />
     </div>
   );
 };

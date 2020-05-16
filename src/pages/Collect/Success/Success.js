@@ -5,25 +5,40 @@ import classes from "./Success.module.scss";
 import LoadingDot from "../../../components/ui/LoadingDot/LoadingDot";
 import SuccessCheck from "./SuccessCheck";
 
-const Success = props => {
+import { firestore, db } from "../../../utils/firebase";
+
+const Success = (props) => {
+  const {
+    userId,
+    recordData,
+    history: { push },
+  } = props;
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    let timer, secondtimer;
-    timer = setTimeout(() => {
-      setIsLoading(false);
-      secondtimer = setTimeout(() => {
-        props.history.push({ pathname: "/result" });
-      }, 3500);
-    }, 4000);
-    return () => {
-      clearTimeout(timer);
-      clearTimeout(secondtimer);
-    };
+    db.collection("users")
+      .doc(userId)
+      .update({
+        record: firestore.FieldValue.arrayUnion({
+          ...recordData,
+          createdAt: firestore.Timestamp.now(),
+        }),
+        updatedAt: firestore.Timestamp.now(),
+      })
+      .then(() => {
+        const timer1 = setTimeout(() => {
+          clearTimeout(timer1);
+          setIsLoading(false);
+          const timer2 = setTimeout(() => {
+            clearTimeout(timer2);
+            push({ pathname: "/result" });
+          }, 3500);
+        }, 2000);
+      });
   }, []);
 
   return (
-    <div>
+    <React.Fragment>
       <CSSTransition
         key="loading"
         in={isLoading}
@@ -60,7 +75,7 @@ const Success = props => {
           </div>
         </div>
       </CSSTransition>
-    </div>
+    </React.Fragment>
   );
 };
 
