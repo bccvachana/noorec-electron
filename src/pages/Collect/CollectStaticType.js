@@ -1,21 +1,19 @@
 import React from "react";
-import weightHeightMock from "../../assets/Collect/weightHeightMock.mp4";
-import temperatureMock from "../../assets/Collect/temperatureMock.mp4";
-import bloodPressureMock from "../../assets/Collect/bloodPressureMock.mp4";
-import rateOxygenMock from "../../assets/Collect/rateOxygenMock.mp4";
+import weightHeightMock from "../../assets/Collect/weightHeight.mov";
+import temperatureMock from "../../assets/Collect/temperature.mov";
+import bloodPressureMock from "../../assets/Collect/bloodPressure.mov";
+import rateOxygenMock from "../../assets/Collect/rateOxygen.m4v";
 
 const CollectStaticType = {
   weightHeight: {
     Title: "ตรวจวัดน้ำหนักและส่วนสูง",
     Detail: <div>ยืนบนเครื่องชั่งน้ำหนัก</div>,
-    Video: weightHeightMock
+    Video: weightHeightMock,
   },
   temperature: {
     Title: "ตรวจวัดอุณหภูมิร่างกาย",
-    Detail: (
-      <div>วางศีรษะบนที่วางคอให้หน้าผากตรงกับเครื่องวัดอุณหภูมิร่างกาย</div>
-    ),
-    Video: temperatureMock
+    Detail: <div>วางหน้าผากให้ตรงกับเครื่องวัดอุณหภูมิร่างกาย</div>,
+    Video: temperatureMock,
   },
   bloodPressure: {
     Title: "ตรวจวัดความดันโลหิต",
@@ -27,7 +25,7 @@ const CollectStaticType = {
         รอจนกว่าจะเครื่องจะตรวจวัดเสร็จและถอดผ้าพันแขนวางไว้ที่เดิม
       </div>
     ),
-    Video: bloodPressureMock
+    Video: bloodPressureMock,
   },
   rateOxygen: {
     Title: "ตรวจวัดชีพจรและปริมาณออกซิเจนในเลือด",
@@ -38,8 +36,8 @@ const CollectStaticType = {
         รอจนกว่าจะเครื่องจะตรวจวัดเสร็จ
       </div>
     ),
-    Video: rateOxygenMock
-  }
+    Video: rateOxygenMock,
+  },
 };
 
 export default CollectStaticType;

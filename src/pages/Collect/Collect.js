@@ -120,7 +120,7 @@ const Collect = (props) => {
   }, [index]);
 
   return (
-    <div>
+    <React.Fragment>
       <CSSTransition
         key={"instruction"}
         in={instruction === true && success === false}
@@ -166,7 +166,7 @@ const Collect = (props) => {
         <Success userId={userId} recordData={recordData} />
       </CSSTransition>
       <Progress collectMode={collectMode} index={index} />
-    </div>
+    </React.Fragment>
   );
 };
 

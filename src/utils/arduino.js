@@ -5,12 +5,10 @@ let port, parser, portName;
 export const checkPort = async () => {
   let isArduino = false;
   const portList = await SerialPort.list();
+  console.log(portList);
   if (portList.length !== 0) {
     portList.forEach((port) => {
-      isArduino =
-        port.serialNumber && port.serialNumber === "6&32a5dfec&0&1"
-          ? true
-          : false;
+      isArduino = port.serialNumber && port.productId === "7523" ? true : false;
     });
   }
   return isArduino;
@@ -22,9 +20,7 @@ export const startPort = async () => {
   if (portList.length !== 0) {
     portList.forEach((port) => {
       portName =
-        port.serialNumber && port.serialNumber === "6&32a5dfec&0&1"
-          ? port.path
-          : null;
+        port.serialNumber && port.productId === "7523" ? port.path : null;
     });
   }
   port = portName ? new SerialPort(portName) : null;

@@ -19,18 +19,18 @@ const Welcome = (props) => {
 
   return (
     <div className={`FullPageContainer ${classes.Container}`}>
-      <div className={classes.Character}>
-        <img src={characterSvg} alt="characterSvg" />
-      </div>
       <img className={classes.Logo} src={logoSvg} alt="logoSvg" />
       <div className={classes.Detail}>
-        แชทบอทและอุปกรณ์
+        เว็บแอปพลิเคชันและอุปกรณ์
         <br />
         สำหรับบันทึกข้อมูลสุขภาพเบื้องต้น
       </div>
       <Link to="/scan">
         <div className={classes.Button}>สแกน QR CODE</div>
       </Link>
+      <div className={classes.Character}>
+        <img src={characterSvg} alt="characterSvg" />
+      </div>
     </div>
   );
 };

@@ -19,6 +19,14 @@ const App = (props) => {
   const [recordData, setRecordData] = useState({});
 
   useEffect(() => {
+    window.addEventListener("keydown", (event) => {
+      if (event.altKey && event.keyCode === 77) {
+        props.history.push("/menu");
+      }
+    });
+  }, []);
+
+  useEffect(() => {
     if (device) {
       console.log(device);
       device.parser.on("data", (result) => {
@@ -91,7 +99,7 @@ const App = (props) => {
 
   return (
     <React.Fragment>
-      <Redirect from="/" to="/menu" />
+      <Redirect from="/" to="/loading" />
       <div className="FadeContainer">
         {routes.map(({ path, Component }) => (
           <Route key={path} exact path={path}>

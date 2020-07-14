@@ -10,6 +10,7 @@
 
 .Character {
   width: 100vw;
+  height: 25vw;
   position: fixed;
   bottom: 1.2vw;
   display: flex;
@@ -18,7 +19,7 @@
 }
 
 .Character img {
-  width: 35vw;
+  height: 100%;
 }
 
 .Logo {

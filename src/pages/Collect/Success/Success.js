@@ -19,6 +19,7 @@ const Success = (props) => {
     db.collection("users")
       .doc(userId)
       .update({
+        ...recordData,
         record: firestore.FieldValue.arrayUnion({
           ...recordData,
           createdAt: firestore.Timestamp.now(),

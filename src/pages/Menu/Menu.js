@@ -19,9 +19,14 @@ const Menu = (props) => {
   } = props;
 
   useEffect(() => {
-    setCollectMode("");
-    setCollectType("");
-    setRecordData({});
+    const timer = setTimeout(() => {
+      setCollectMode("");
+      setCollectType("");
+      setRecordData({});
+    }, 300);
+    return () => {
+      clearTimeout(timer);
+    };
   }, []);
 
   const button = [
@@ -67,8 +72,7 @@ const Menu = (props) => {
         />
       </div>
       <div className={classes.Title}>
-        สวัสดีคุณ{" "}
-        <span style={{ color: "#fa5458" }}>{userName ? userName : "null"}</span>
+        สวัสดี, คุณ <span>{userName ? userName : "วจนะ"}</span>
       </div>
       <div className={classes.Detail}>เลือกสิ่งที่ต้องการตรวจวัดได้เลยค่ะ</div>
       <div className={classes.MenuContainer}>

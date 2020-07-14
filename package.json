@@ -53,12 +53,12 @@
   "main": "public/electron.js",
   "homepage": "./",
   "author": {
-    "name": "Your Name",
-    "email": "your.email@domain.com",
-    "url": "https://your-website.com"
+    "name": "Vachana Chongruchipinyo",
+    "email": "noorec.mdt@gmail.com",
+    "url": "https://noorec-kmutt.web.app/"
   },
   "build": {
-    "appId": "com.my-website.my-app",
+    "appId": "com.noorec.web-app",
     "productName": "NOOREC",
     "copyright": "Copyright © 2020 ${author}",
     "files": [

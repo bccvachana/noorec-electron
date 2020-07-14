@@ -8,14 +8,18 @@
   @include font-h1;
 }
 
-.Instruction > div {
-  display: inline-block;
-  width: 20vw;
-  height: 25vw;
-  background-color: #ffffff;
+.Instruction {
+  margin: 1.8vw 0 1vw;
+  padding: 1.5vw 3.5vw;
+  background-color: white;
+  border-radius: 2.5vw;
   @include shadow2;
-  border-radius: $radius;
-  margin: 2vw 2vw 1vw;
+  @include font-detail2;
+  img {
+    display: block;
+    height: 18vw;
+    margin-bottom: 1.5vw;
+  }
 }
 
 .ButtonContainer div {

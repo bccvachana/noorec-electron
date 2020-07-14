@@ -16,11 +16,12 @@ export const criteriaCheck = {
 
     if (high <= 90 && low <= 60) return "low";
 
-    if (high <= 120) highCriteria = "normal";
-    else if (high < 130) highCriteria = "over";
+    if (high <= 129) highCriteria = "normal";
+    else if (high <= 139) highCriteria = "over";
     else highCriteria = "high";
 
-    if (low <= 80) lowCriteria = "normal";
+    if (low <= 84) lowCriteria = "normal";
+    else if (low <= 89) highCriteria = "over";
     else lowCriteria = "high";
 
     if (highCriteria === "normal" && lowCriteria === "normal") return "normal";

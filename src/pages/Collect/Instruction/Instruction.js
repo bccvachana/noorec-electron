@@ -1,14 +1,14 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import classes from "./Instruction.module.scss";
+import instruction from "../../../assets/Collect/instruction.svg";
 
 const Instruction = (props) => (
   <div className={`Fade FullPageContainer ${classes.Container}`}>
     <div className={classes.Title}>คำแนะนำการใช้งาน</div>
     <div className={classes.Instruction}>
-      <div></div>
-      <div></div>
-      <div></div>
+      <img src={instruction} alt="instruction" />
+      ดูวีดีโอและทำตามขั้นตอนที่ระบุ
     </div>
     <div className={classes.ButtonContainer}>
       <div

@@ -141,7 +141,7 @@ const Result = (props) => {
     <div className="FullPageContainer">
       <div className={classes.Title}>
         ข้อมูลสุขภาพของคุณ{" "}
-        <span style={{ color: "#fa5458" }}>{userName ? userName : "null"}</span>
+        <span style={{ color: "#fa5458" }}>{userName ? userName : "วจนะ"}</span>
       </div>
       <div
         className={`${classes.Container} ${

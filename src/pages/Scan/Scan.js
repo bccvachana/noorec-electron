@@ -24,9 +24,9 @@ const Scan = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const setBackToWelcomeTimer = () => {
-    // backToWelcomeTimer = setTimeout(() => {
-    //   push({ pathname: "/welcome" });
-    // }, 10000);
+    backToWelcomeTimer = setTimeout(() => {
+      push({ pathname: "/welcome" });
+    }, 30000);
   };
 
   const qrOnScan = (result) => {
@@ -35,22 +35,28 @@ const Scan = (props) => {
       setIsLoading(true);
       let qrData;
       try {
-        qrData = JSON.parse(result);
+        qrData = JSON.parse(result.slice(1));
       } catch (e) {
         qrData = undefined;
       }
-      const username = qrData ? qrData.username : null;
-      const userid = qrData ? qrData.userid : null;
+      if (!qrData) {
+        try {
+          qrData = JSON.parse(result);
+        } catch (e) {
+          qrData = undefined;
+        }
+      }
+      const { uid, name } = qrData ? qrData : {};
       loadTimer = setTimeout(() => {
         clearTimeout(loadTimer);
         setIsLoading(false);
-        if (username && userid) {
+        if (uid && name) {
           openModal(
             <QrSuccessModal
-              username={username}
+              username={name}
               confirm={() => {
-                setUserName(username);
-                setUserId(userid);
+                setUserName(name);
+                setUserId(uid);
                 push({ pathname: "/menu" });
               }}
               retry={() => {

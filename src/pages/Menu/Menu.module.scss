@@ -13,6 +13,9 @@
 
 .Title {
   @include font-h0;
+  span {
+    color: $color-accent1;
+  }
 }
 
 .Detail {

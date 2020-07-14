@@ -9,12 +9,12 @@ let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1920,
-    height: 1080,
+    // width: 1920,
+    // height: 1080,
     fullscreen: isDev ? false : true,
     webPreferences: {
-      nodeIntegration: true
-    }
+      nodeIntegration: true,
+    },
   });
   if (!isDev) mainWindow.setMenu(null);
   mainWindow.loadURL(
